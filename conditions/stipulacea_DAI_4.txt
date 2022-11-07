@@ -1,0 +1,6 @@
+Sample;Species;DAI;Replicate
+VS4R1;stipulacea;4;1
+VS4R2;stipulacea;4;2
+VS4R3;stipulacea;4;3
+VRP4R2;reflexopilosa;4;2
+VRP4R3;reflexopilosa;4;3

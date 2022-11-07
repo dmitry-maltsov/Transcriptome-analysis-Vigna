@@ -1,0 +1,10 @@
+Sample;Species;DAI;Replicate
+VA0R2;angularis;0;2
+VA2R1;angularis;2;1
+VA2R2;angularis;2;2
+VA2R3;angularis;2;3
+VA4R1;angularis;4;1
+VA4R2;angularis;4;3
+VA6R1;angularis;6;1
+VA6R2;angularis;6;2
+VA6R3;angularis;6;3

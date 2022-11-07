@@ -1,0 +1,8 @@
+Sample;Species;DAI;Replicate
+VRP0R2;reflexopilosa;0;2
+VRP2R2;reflexopilosa;2;2
+VRP2R3;reflexopilosa;2;3
+VRP4R2;reflexopilosa;4;2
+VRP4R3;reflexopilosa;4;3
+VRP6R2;reflexopilosa;6;2
+VRP6R3;reflexopilosa;6;3

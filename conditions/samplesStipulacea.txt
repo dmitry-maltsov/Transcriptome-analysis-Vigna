@@ -1,0 +1,13 @@
+Sample;Species;DAI;Replicate
+VS0R1;stipulacea;0;1
+VS0R2;stipulacea;0;2
+VS0R3;stipulacea;0;3
+VS2R1;stipulacea;2;1
+VS2R2;stipulacea;2;2
+VS2R3;stipulacea;2;3
+VS4R1;stipulacea;4;1
+VS4R2;stipulacea;4;2
+VS4R3;stipulacea;4;3
+VS6R1;stipulacea;6;1
+VS6R2;stipulacea;6;2
+VS6R3;stipulacea;6;3

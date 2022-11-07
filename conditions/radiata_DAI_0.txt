@@ -1,0 +1,7 @@
+Sample;Species;DAI;Replicate
+VR0R3;radiata;0;3
+VA0R2;angularis;0;2
+VRP0R2;reflexopilosa;0;2
+VS0R1;stipulacea;0;1
+VS0R2;stipulacea;0;2
+VS0R3;stipulacea;0;3
