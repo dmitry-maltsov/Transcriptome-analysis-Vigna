@@ -1,0 +1,6 @@
+Sample;Species;DAI;Replicate
+VR4R1;radiata;4;1
+VR4R2;radiata;4;2
+VR4R3;radiata;4;3
+VA4R1;angularis;4;1
+VA4R2;angularis;4;3

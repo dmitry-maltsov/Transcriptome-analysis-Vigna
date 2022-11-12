@@ -1,27 +1,27 @@
 library(DESeq2)
 
 # Разница между GeneCounts в STAR и в featureCounts
-VA6R3_STAR <- read.delim("genecounts/VA6R3_2ReadsPerGene.out.tab", header = FALSE, skip = 4);
-VS4R1_STAR <- read.delim("genecounts/VS4R1_2ReadsPerGene.out.tab", header = FALSE, skip = 4);
-VR2R2_STAR <- read.delim("genecounts/VR2R2_2ReadsPerGene.out.tab", header = FALSE, skip = 4);
+# VA6R3_STAR <- read.delim("genecounts/VA6R3_2ReadsPerGene.out.tab", header = FALSE, skip = 4);
+# VS4R1_STAR <- read.delim("genecounts/VS4R1_2ReadsPerGene.out.tab", header = FALSE, skip = 4);
+# VR2R2_STAR <- read.delim("genecounts/VR2R2_2ReadsPerGene.out.tab", header = FALSE, skip = 4);
 
 
 VA6R3 <- read.delim("genecounts/VA6R3counts.txt", header = FALSE, skip = 2);
-VS4R1 <- read.delim("genecounts/VS4R1counts.txt", header = FALSE, skip = 2);
-VR2R2 <- read.delim("genecounts/VR2R2counts.txt", header = FALSE, skip = 2);
+# VS4R1 <- read.delim("genecounts/VS4R1counts.txt", header = FALSE, skip = 2);
+# VR2R2 <- read.delim("genecounts/VR2R2counts.txt", header = FALSE, skip = 2);
 
 
-difVA6R3 <- data.frame(name=VA6R3$V1, name_star=VA6R3_STAR$V1,
-                              dif_names=ifelse(VA6R3_STAR$V1 == VA6R3$V1, FALSE, TRUE),
-                       StarVA6R3=VA6R3_STAR$V2, VA6R3=VA6R3$V7, counts_dif=VA6R3_STAR$V2-VA6R3$V7);
+#difVA6R3 <- data.frame(name=VA6R3$V1, name_star=VA6R3_STAR$V1,
+#                              dif_names=ifelse(VA6R3_STAR$V1 == VA6R3$V1, FALSE, TRUE),
+#                       StarVA6R3=VA6R3_STAR$V2, VA6R3=VA6R3$V7, counts_dif=VA6R3_STAR$V2-VA6R3$V7);
 
-difVS4R1 <- data.frame(name=VS4R1$V1, name_star=VS4R1_STAR$V1,
-                              dif_names=ifelse(VS4R1_STAR$V1 == VS4R1$V1, FALSE, TRUE),
-                       StarVS4R1=VS4R1_STAR$V2, VS4R1=VS4R1$V7, counts_dif=VS4R1_STAR$V2-VS4R1$V7);
+#difVS4R1 <- data.frame(name=VS4R1$V1, name_star=VS4R1_STAR$V1,
+#                              dif_names=ifelse(VS4R1_STAR$V1 == VS4R1$V1, FALSE, TRUE),
+#                       StarVS4R1=VS4R1_STAR$V2, VS4R1=VS4R1$V7, counts_dif=VS4R1_STAR$V2-VS4R1$V7);
 
-difVR2R2 <- data.frame(name=VR2R2$V1, name_star=VR2R2_STAR$V1,
-                              dif_names=ifelse(VR2R2_STAR$V1 == VR2R2$V1, FALSE, TRUE),
-                       StarVR2R2=VR2R2_STAR$V2, VR2R2=VR2R2$V7, counts_dif=VR2R2_STAR$V2-VR2R2$V7);
+#difVR2R2 <- data.frame(name=VR2R2$V1, name_star=VR2R2_STAR$V1,
+#                              dif_names=ifelse(VR2R2_STAR$V1 == VR2R2$V1, FALSE, TRUE),
+#                       StarVR2R2=VR2R2_STAR$V2, VR2R2=VR2R2$V7, counts_dif=VR2R2_STAR$V2-VR2R2$V7);
 
 
 # Создание матриц GeneCounts и ColData для различных экспериментов
@@ -89,6 +89,76 @@ cd_stipulacea <- read.csv('conditions/samplesStipulacea.txt', sep=";", row.names
 cd_stipulacea$DAI <- as.factor(cd_stipulacea$DAI)
 
 dds_stipulacea <- DESeqDataSetFromMatrix(countData = gc_stipulacea, colData = cd_stipulacea, design = ~ DAI)
+
+
+# DESeq По дням
+
+dds_angularis <- DESeq(dds_angularis)
+dds_radiata <- DESeq(dds_radiata)
+dds_reflexopilosa <- DESeq(dds_reflexopilosa)
+dds_stipulacea <- DESeq(dds_stipulacea)
+
+
+
+print(resultsNames(dds_angularis))
+print(resultsNames(dds_radiata))
+print(resultsNames(dds_reflexopilosa))
+print(resultsNames(dds_stipulacea))
+
+
+res_angularis.1 <- results(dds_angularis, name="DAI_2_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_angularis.2 <- results(dds_angularis, name="DAI_4_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_angularis.3 <- results(dds_angularis, name="DAI_6_vs_0", alpha = 0.05, lfcThreshold = 1)
+
+res_radiata.1 <- results(dds_radiata, name="DAI_2_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_radiata.2 <- results(dds_radiata, name="DAI_4_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_radiata.3 <- results(dds_radiata, name="DAI_6_vs_0", alpha = 0.05, lfcThreshold = 1)
+
+
+res_reflexopilosa.1 <- results(dds_reflexopilosa, name="DAI_2_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_reflexopilosa.2 <- results(dds_reflexopilosa, name="DAI_4_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_reflexopilosa.3 <- results(dds_reflexopilosa, name="DAI_6_vs_0", alpha = 0.05, lfcThreshold = 1)
+
+#res_stipulacea_all.1 <- results(dds_stipulacea, name="DAI_2_vs_0", lfcThreshold = 1)
+#summary(res_stipulacea_all.1)
+
+res_stipulacea_t.1 <- results(dds_stipulacea, name="DAI_2_vs_0", alpha = 0.05, lfcThreshold = 1)
+summary(res_stipulacea_t.1)
+res_stipulacea_t_filt.1  <- res_stipulacea_t.1[which(res_stipulacea_t.1$padj > 0.05 & abs(res_stipulacea_t.1 $log2FoldChange) < 1), ]
+res_stipulacea_f_df_filt.1 <- as.data.frame(res_stipulacea_f_filt.1)
+
+res_stipulacea_f.1 <- results(dds_stipulacea, name="DAI_2_vs_0", alpha = 0.05, lfcThreshold = 1, altHypothesis="lessAbs")
+summary(res_stipulacea_f.1)
+res_stipulacea_f_df.1 <- as.data.frame(res_stipulacea_f.1)
+
+
+#par(mfrow=c(1,2))
+#drawLines <- function() abline(h=c(-1,1),col="dodgerblue",lwd=2)
+#ylim <- c(-2,2)
+#plotMA(res_stipulacea_t.1, ylim=ylim); drawLines()
+#plotMA(res_stipulacea_f.1, ylim=ylim); drawLines()
+
+
+
+
+res_stipulacea_t.2 <- results(dds_stipulacea, name="DAI_4_vs_0", alpha = 0.05, lfcThreshold = 1)
+res_stipulacea_t.3 <- results(dds_stipulacea, name="DAI_6_vs_0", alpha = 0.05, lfcThreshold = 1)
+
+summary(res_stipulacea_t.3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# -----------------------------
 
 # radiata vs angularis, reflexopilosa, stipulacea DAI 0
 sample_names <- c('VR0R3', 'VA0R2', 'VRP0R2', 'VS0R1', 'VS0R2', 'VS0R3');
@@ -292,12 +362,6 @@ cd_stipulacea_DAI_6$Species <- relevel(cd_stipulacea_DAI_6$Species, 'stipulacea'
 dds_stipulacea_DAI_6 <- DESeqDataSetFromMatrix(countData = gc_stipulacea_DAI_6, colData = cd_stipulacea_DAI_6, design = ~ Species)
 
 
-# DESeq
-
-dds_angularis <- DESeq(dds_angularis)
-dds_radiata <- DESeq(dds_radiata)
-dds_reflexopilosa <- DESeq(dds_reflexopilosa)
-dds_stipulacea <- DESeq(dds_stipulacea)
 
 dds_radiata_DAI_0 <- DESeq(dds_radiata_DAI_0)
 dds_radiata_DAI_2 <- DESeq(dds_radiata_DAI_2)
@@ -312,12 +376,6 @@ dds_angularis_DAI_6 <- DESeq(dds_angularis_DAI_6)
 dds_stipulacea_DAI_0 <- DESeq(dds_stipulacea_DAI_0)
 dds_stipulacea_DAI_2 <- DESeq(dds_stipulacea_DAI_2)
 dds_stipulacea_DAI_4 <- DESeq(dds_stipulacea_DAI_4)
-dds_stipulacea_DAI_6 <- DESeq(dds_stipulacea_DAI_6)
-
-print(resultsNames(dds_angularis))
-print(resultsNames(dds_radiata))
-print(resultsNames(dds_reflexopilosa))
-print(resultsNames(dds_stipulacea))
 
 print(resultsNames(dds_radiata_DAI_0))
 print(resultsNames(dds_radiata_DAI_2))
@@ -334,25 +392,86 @@ print(resultsNames(dds_stipulacea_DAI_2))
 print(resultsNames(dds_stipulacea_DAI_4))
 print(resultsNames(dds_stipulacea_DAI_6))
 
-res_angularis <- results(dds_angularis)
-res_radiata <- results(dds_radiata)
-res_reflexopilosa <- results(dds_reflexopilosa)
-res_stipulacea <- results(dds_stipulacea)
 
-res_radiata_DAI_0 <- results(dds_radiata_DAI_0)
-res_radiata_DAI_2 <- results(dds_radiata_DAI_2)
-res_radiata_DAI_4 <- results(dds_radiata_DAI_4)
-res_radiata_DAI_6 <- results(dds_radiata_DAI_6)
+res_angularis.1 <- results(dds_angularis, name="DAI_2_vs_0")
+res_angularis.2 <- results(dds_angularis, name="DAI_4_vs_0")
+res_angularis.3 <- results(dds_angularis, name="DAI_6_vs_0")
 
-res_angularis_DAI_0 <- results(dds_angularis_DAI_0)
-res_angularis_DAI_2 <- results(dds_angularis_DAI_2)
-res_angularis_DAI_4 <- results(dds_angularis_DAI_4)
-res_angularis_DAI_6 <- results(dds_angularis_DAI_6)
+res_radiata.1 <- results(dds_radiata, name="DAI_2_vs_0")
+res_radiata.2 <- results(dds_radiata, name="DAI_4_vs_0")
+res_radiata.3 <- results(dds_radiata, name="DAI_6_vs_0")
 
-res_stipulacea_DAI_0 <- results(dds_stipulacea_DAI_0)
-res_stipulacea_DAI_2 <- results(dds_stipulacea_DAI_2)
-res_stipulacea_DAI_4 <- results(dds_stipulacea_DAI_4)
-res_stipulacea_DAI_6 <- results(dds_stipulacea_DAI_6)
+
+res_reflexopilosa.1 <- results(dds_reflexopilosa, name="DAI_2_vs_0")
+res_reflexopilosa.2 <- results(dds_reflexopilosa, name="DAI_4_vs_0")
+res_reflexopilosa.3 <- results(dds_reflexopilosa, name="DAI_6_vs_0")
+
+res_stipulacea.1 <- results(dds_stipulacea, name="DAI_2_vs_0")
+res_stipulacea.2 <- results(dds_stipulacea, name="DAI_4_vs_0")
+res_stipulacea.3 <- results(dds_stipulacea, name="DAI_6_vs_0")
+
+
+res_radiata_DAI_0.1 <- results(dds_radiata_DAI_0, name="Species_angularis_vs_radiata")
+res_radiata_DAI_0.2 <- results(dds_radiata_DAI_0, name="Species_reflexopilosa_vs_radiata")
+res_radiata_DAI_0.3 <- results(dds_radiata_DAI_0, name="Species_stipulacea_vs_radiata")
+
+res_radiata_DAI_2.1 <- results(dds_radiata_DAI_2, name="Species_angularis_vs_radiata")
+res_radiata_DAI_2.2 <- results(dds_radiata_DAI_2, name="Species_reflexopilosa_vs_radiata")
+res_radiata_DAI_2.3 <- results(dds_radiata_DAI_2, name="Species_stipulacea_vs_radiata")
+
+res_radiata_DAI_4.1 <- results(dds_radiata_DAI_4, name="Species_angularis_vs_radiata")
+res_radiata_DAI_4.2 <- results(dds_radiata_DAI_4, name="Species_reflexopilosa_vs_radiata")
+res_radiata_DAI_4.3 <- results(dds_radiata_DAI_4, name="Species_stipulacea_vs_radiata")
+
+res_radiata_DAI_6.1 <- results(dds_radiata_DAI_6, name="Species_angularis_vs_radiata")
+res_radiata_DAI_6.2 <- results(dds_radiata_DAI_6, name="Species_reflexopilosa_vs_radiata")
+res_radiata_DAI_6.3 <- results(dds_radiata_DAI_6, name="Species_stipulacea_vs_radiata")
+
+res_angularis_DAI_0.1 <- results(dds_angularis_DAI_0, name="Species_reflexopilosa_vs_angularis")
+res_angularis_DAI_0.2 <- results(dds_angularis_DAI_0, name="Species_stipulacea_vs_angularis")
+
+res_angularis_DAI_2.1 <- results(dds_angularis_DAI_2, name="Species_reflexopilosa_vs_angularis")
+res_angularis_DAI_2.2 <- results(dds_angularis_DAI_2, name="Species_stipulacea_vs_angularis")
+
+res_angularis_DAI_4.1 <- results(dds_angularis_DAI_4, name="Species_reflexopilosa_vs_angularis")
+res_angularis_DAI_4.2 <- results(dds_angularis_DAI_4, name="Species_stipulacea_vs_angularis")
+
+res_angularis_DAI_6.1 <- results(dds_angularis_DAI_6, name="Species_reflexopilosa_vs_angularis")
+res_angularis_DAI_6.2 <- results(dds_angularis_DAI_6, name="Species_stipulacea_vs_angularis")
+
+res_stipulacea_DAI_0.1 <- results(dds_stipulacea_DAI_0, name="Species_reflexopilosa_vs_stipulacea")
+res_stipulacea_DAI_2.1 <- results(dds_stipulacea_DAI_2, name="Species_reflexopilosa_vs_stipulacea")
+res_stipulacea_DAI_4.1 <- results(dds_stipulacea_DAI_4, name="Species_reflexopilosa_vs_stipulacea")
+res_stipulacea_DAI_6.1 <- results(dds_stipulacea_DAI_6, name="Species_reflexopilosa_vs_stipulacea")
+
+
+res_radiata_DAI_0_df <- as.data.frame(res_radiata_DAI_0.1)
+write.csv(res_radiata_DAI_0_df, file = "res_radiata_DAI_0.csv")
+res_radiata_DAI_2_df <- as.data.frame(res_radiata_DAI_2.1)
+write.csv(res_radiata_DAI_2_df, file = "res_radiata_DAI_2.csv")
+res_radiata_DAI_4_df <- as.data.frame(res_radiata_DAI_4.1)
+write.csv(res_radiata_DAI_4_df, file = "res_radiata_DAI_4.csv")
+res_radiata_DAI_6_df <- as.data.frame(res_radiata_DAI_6.1)
+write.csv(res_radiata_DAI_6_df, file = "res_radiata_DAI_6.csv")
+
+res_angularis_DAI_0_df <- as.data.frame(res_angularis_DAI_0.1)
+write.csv(res_angularis_DAI_0_df, file = "res_angularis_DAI_0.csv")
+res_angularis_DAI_2_df <- as.data.frame(res_angularis_DAI_2.1)
+write.csv(res_angularis_DAI_2_df, file = "res_angularis_DAI_2.csv")
+res_angularis_DAI_4_df <- as.data.frame(res_angularis_DAI_4.1)
+write.csv(res_angularis_DAI_4_df, file = "res_angularis_DAI_4.csv")
+res_angularis_DAI_6_df <- as.data.frame(res_angularis_DAI_6.1)
+write.csv(res_angularis_DAI_6_df, file = "res_angularis_DAI_6.csv")
+
+res_stipulacea_DAI_0_df <- as.data.frame(res_stipulacea_DAI_0.1)
+write.csv(res_stipulacea_DAI_0_df, file = "res_stipulacea_DAI_0.csv")
+res_stipulacea_DAI_2_df <- as.data.frame(res_stipulacea_DAI_2.1)
+write.csv(res_stipulacea_DAI_2_df, file = "res_stipulacea_DAI_2.csv")
+res_stipulacea_DAI_4_df <- as.data.frame(res_stipulacea_DAI_4.1)
+write.csv(res_stipulacea_DAI_4_df, file = "res_stipulacea_DAI_4.csv")
+res_stipulacea_DAI_6_df <- as.data.frame(res_stipulacea_DAI_6.1)
+write.csv(res_stipulacea_DAI_6_df, file = "res_stipulacea_DAI_6.csv")
+# -----------------------------
 
 # Визулизация результатов
 
@@ -395,48 +514,35 @@ dev.off()
 # Volcano Plot
 library(EnhancedVolcano)
 
-pdf(file="volcano_reflexopilosa_DAI_2_vs_0.pdf")
+png(file="volcano_reflexopilosa_DAI_2_vs_0.png")
 
-EnhancedVolcano(res_reflexopilosa,
-                lab = rownames(res_reflexopilosa),
+EnhancedVolcano(res_reflexopilosa.1,
+                lab = rownames(res_reflexopilosa.1),
                 x = 'log2FoldChange',
                 y = 'pvalue',
                 title = 'Reflexopilosa DAI 2 versus DAI 0')
 
 dev.off()
 
-pdf(file="volcano_stipulacea_DAI_2_vs_0.pdf")
+png(file="volcano_stipulacea_DAI_2_vs_0.png")
 
-EnhancedVolcano(res_reflexopilosa,
-                lab = rownames(res_stipulacea),
+EnhancedVolcano(res_stipulacea.1,
+                lab = rownames(res_stipulacea.1),
                 x = 'log2FoldChange',
                 y = 'pvalue',
                 title = 'Stipulacea DAI 2 versus DAI 0')
 
 dev.off()
 
-pdf(file="volcano_angularis_vs_radiata_DAI_2.pdf")
+png(file="volcano_angularis_vs_radiata_DAI_2.png")
 
-EnhancedVolcano(res_radiata_DAI_2,
-                lab = rownames(res_radiata_DAI_2),
+EnhancedVolcano(res_radiata_DAI_2.1,
+                lab = rownames(res_radiata_DAI_2.1),
                 x = 'log2FoldChange',
                 y = 'pvalue',
                 title = 'Stipulacea DAI 2 versus DAI 0')
 
 dev.off()
 
-res_radiata_DAI_0_df <- as.data.frame(res_radiata_DAI_0)
-res_radiata_DAI_2_df <- as.data.frame(res_radiata_DAI_2)
-res_radiata_DAI_4_df <- as.data.frame(res_radiata_DAI_4)
-res_radiata_DAI_6_df <- as.data.frame(res_radiata_DAI_6)
 
-res_angularis_DAI_0_df <- as.data.frame(res_angularis_DAI_0)
-res_angularis_DAI_2_df <- as.data.frame(res_angularis_DAI_2)
-res_angularis_DAI_4_df <- as.data.frame(res_angularis_DAI_4)
-res_angularis_DAI_6_df <- as.data.frame(res_angularis_DAI_6)
-
-res_stipulacea_DAI_0_df <- as.data.frame(res_stipulacea_DAI_0)
-res_stipulacea_DAI_2_df <- as.data.frame(res_stipulacea_DAI_2)
-res_stipulacea_DAI_4_df <- as.data.frame(res_stipulacea_DAI_4)
-res_stipulacea_DAI_6_df <- as.data.frame(res_stipulacea_DAI_6)
 

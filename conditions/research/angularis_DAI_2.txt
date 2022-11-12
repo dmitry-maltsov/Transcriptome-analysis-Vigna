@@ -1,0 +1,6 @@
+Sample;Species;DAI;Replicate
+VA2R1;angularis;2;1
+VA2R2;angularis;2;2
+VA2R3;angularis;2;3
+VRP2R2;reflexopilosa;2;2
+VRP2R3;reflexopilosa;2;3
